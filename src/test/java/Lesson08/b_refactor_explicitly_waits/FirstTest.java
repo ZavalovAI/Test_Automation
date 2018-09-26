@@ -1,5 +1,7 @@
-package Lesson07.a_proxy_elements_and_page_factory.e_add_basetest;
+package Lesson08.b_refactor_explicitly_waits;
 
+import Lesson08.a_move_page_object_to_separate_class.BaseTest;
+import Lesson08.a_move_page_object_to_separate_class.LandingPageLocators;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,13 +9,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 
-public class FirstTest extends BaseTest {
+public class FirstTest extends Lesson08.b_refactor_explicitly_waits.BaseTest {
 
     @Test
     public void verifyFirstSearchResultShouldRefresh() {
         String query1 = "Dress";
         String query2 = "T-shirt";
-        LandingPage landingPage = new LandingPage();
+        LandingPage landingPage = new LandingPage(wd);
+landingPage.visit();
 
         landingPage.searchFor(query1);
          (new WebDriverWait(wd, 10))
@@ -25,10 +28,7 @@ public class FirstTest extends BaseTest {
 
     }
 
-    class LandingPage {
-
-        By searchField = By.id("search_query_top");
-        By firstAdvice = By.xpath("//*[@id=\"index\"]/div[2]/ul/li[1]");
+    class LandingPage implements Lesson08.b_refactor_explicitly_waits.LandingPageLocators {
 
          void searchFor(String query) {
             $(searchField).click(); //-this text equels to: wd.findElement(By.id(search_query_top)).click();
@@ -42,4 +42,9 @@ public class FirstTest extends BaseTest {
     }
 
 }
+
+//*change a and b packages
+
+
+
 
